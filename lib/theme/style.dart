@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 final ThemeData themeData = ThemeData(
-  primaryColor: HexColor.fromHex('#183D6F')
+  primaryColor: HexColor.fromHex('#183D6F'),
+  backgroundColor: Colors.white
 );
 
 extension HexColor on Color {

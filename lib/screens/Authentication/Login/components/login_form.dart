@@ -11,9 +11,7 @@ class LoginForm extends StatefulWidget {
 class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
-  onSubmit() {
-    
-  }
+  onSubmit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +19,21 @@ class LoginFormState extends State<LoginForm> {
         key: _formKey,
         child: Column(children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: TextFormField(
-              decoration: InputDecoration(hintText: "Username"),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            child: TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(hintText: "Password"),
-            ),
-          ),
+              margin: EdgeInsets.only(left: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2, right: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: InputDecoration(hintText: "Username"),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(hintText: "Password"),
+                  ),
+                ],
+              )),
           SizedBox(
             height: 20,
           ),
@@ -45,7 +43,10 @@ class LoginFormState extends State<LoginForm> {
               elevation: 7,
               onPressed: this.onSubmit,
               color: Theme.of(context).primaryColor,
-              child: Text('Login'),
+              child: Text(
+                'Login',
+                style: TextStyle(fontSize: 16),
+              ),
               textColor: Colors.white,
             ),
           ),

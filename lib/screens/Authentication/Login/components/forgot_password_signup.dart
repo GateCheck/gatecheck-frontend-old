@@ -4,11 +4,11 @@ class ForgotPasswordSignupButtonGroup extends StatelessWidget {
   const ForgotPasswordSignupButtonGroup({Key key}) : super(key: key);
 
   onSignupClick(BuildContext context) {
-    Navigator.popAndPushNamed(context, '/signup');
+    Navigator.pushNamed(context, '/signup');
   }
 
   onForgotPasswordClick(BuildContext context) {
-    Navigator.popAndPushNamed(context, '/forgotpassword');
+    Navigator.pushNamed(context, '/forgotpassword');
   }
 
   @override
@@ -18,21 +18,23 @@ class ForgotPasswordSignupButtonGroup extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width -
-                    (MediaQuery.of(context).size.width / 1.2) +
-                    10,
+                left: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2,
                 right: 20),
-            child: RaisedButton(
-              elevation: 7,
-              onPressed: () => this.onSignupClick(context),
-              color: Theme.of(context).colorScheme.secondaryVariant,
-              child: Text('Signup'),
-              textColor: Colors.white,
+            child: ButtonTheme(
+              minWidth: (MediaQuery.of(context).size.width / 1.2) / 2 - 10,
+              child: RaisedButton(
+                elevation: 3,
+                onPressed: () => this.onSignupClick(context),
+                color: Theme.of(context).colorScheme.secondaryVariant,
+                child: Text('Signup'),
+                textColor: Colors.white,
+              ),
             ),
           ),
           ButtonTheme(
+            minWidth: (MediaQuery.of(context).size.width / 1.2) / 2 - 10,
             child: RaisedButton(
-              elevation: 7,
+              elevation: 3,
               onPressed: () => this.onForgotPasswordClick(context),
               color: Theme.of(context).colorScheme.secondaryVariant,
               child: Text('Forgot Password'),
