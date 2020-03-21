@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gatecheck_frontend_flutter/components/password_text_field.dart';
 import 'package:gatecheck_frontend_flutter/screens/Authentication/Login/components/forgot_password_signup.dart';
 
 class LoginForm extends StatefulWidget {
@@ -44,11 +45,11 @@ class LoginFormState extends State<LoginForm> {
                 SizedBox(
                   height: 20,
                 ),
-                TextFormField(
+                PasswordTextField(
                   controller: passwordEditController,
-                  obscureText: true,
-                  decoration: InputDecoration(hintText: "Password"),
-                ),
+                  defaultVisibile: false,
+                  hintText: "Password",
+                )
               ],
             ),
             SizedBox(

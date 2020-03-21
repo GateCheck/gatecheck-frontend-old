@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gatecheck_frontend_flutter/app_localizations.dart';
 import 'package:gatecheck_frontend_flutter/routes.dart';
 import 'package:gatecheck_frontend_flutter/theme/style.dart';
 
@@ -14,6 +15,10 @@ class MyApp extends StatelessWidget {
       theme: themeData,
       initialRoute: '/',
       routes: routes,
+      supportedLocales: [Locale('en', 'US'), Locale('he', 'IL')],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+      ],
     );
   }
 }
