@@ -18,7 +18,7 @@ class ForgotPasswordSignupButtonGroup extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-                left: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2,
+                left: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width)) / 2,
                 right: 20),
             child: ButtonTheme(
               minWidth: (MediaQuery.of(context).size.width / 1.2) / 2 - 10,

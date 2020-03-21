@@ -11,46 +11,64 @@ class LoginForm extends StatefulWidget {
 class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
+  final usernameEditController = TextEditingController();
+  final passwordEditController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameEditController.dispose();
+    super.dispose();
+  }
+
   onSubmit() {}
 
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(left: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2, right: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.2)) / 2),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(hintText: "Username"),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(hintText: "Password"),
-                  ),
-                ],
-              )),
-          SizedBox(
-            height: 20,
-          ),
-          ButtonTheme(
-            minWidth: MediaQuery.of(context).size.width / 1.2,
-            child: RaisedButton(
-              elevation: 7,
-              onPressed: this.onSubmit,
-              color: Theme.of(context).primaryColor,
-              child: Text(
-                'Login',
-                style: TextStyle(fontSize: 16),
-              ),
-              textColor: Colors.white,
+        child: Container(
+          margin: EdgeInsets.only(
+              left: (MediaQuery.of(context).size.width -
+                      (MediaQuery.of(context).size.width / 1.2)) /
+                  2,
+              right: (MediaQuery.of(context).size.width -
+                      (MediaQuery.of(context).size.width / 1.2)) /
+                  2),
+          child: Column(children: <Widget>[
+            Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: usernameEditController,
+                  decoration: InputDecoration(hintText: "Username"),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: passwordEditController,
+                  obscureText: true,
+                  decoration: InputDecoration(hintText: "Password"),
+                ),
+              ],
             ),
-          ),
-          ForgotPasswordSignupButtonGroup()
-        ]));
+            SizedBox(
+              height: 20,
+            ),
+            ButtonTheme(
+              minWidth: MediaQuery.of(context).size.width / 1.2,
+              child: RaisedButton(
+                elevation: 7,
+                onPressed: this.onSubmit,
+                color: Theme.of(context).primaryColor,
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontSize: 16),
+                ),
+                textColor: Colors.white,
+              ),
+            ),
+            ForgotPasswordSignupButtonGroup()
+          ]),
+        ));
   }
 }
