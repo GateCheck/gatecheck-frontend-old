@@ -1,6 +1,7 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:gatecheck_frontend_flutter/components/password_text_field.dart';
+import 'package:gatecheck_frontend_flutter/screens/Authentication/Signup/components/school_finder.dart';
 import 'package:gatecheck_frontend_flutter/services/schools.dart';
 import 'package:gatecheck_frontend_flutter/utils/get_size.dart';
 
@@ -20,7 +21,6 @@ class SignupFormState extends State<SignupForm> {
   final usernameEditController = TextEditingController();
   final passwordEditController = TextEditingController();
   final confirmPasswordEditController = TextEditingController();
-  final schoolNamesFuture = getSchoolNames();
 
   @override
   void dispose() {
@@ -52,29 +52,14 @@ class SignupFormState extends State<SignupForm> {
                 decoration: InputDecoration(hintText: "Full Name"),
               ),
               SizedBox(height: getPercentageOfScreenHeight(context, 3)),
-              StreamBuilder<List<String>>(
-                stream: Stream.fromFuture(schoolNamesFuture),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return SimpleAutoCompleteTextField(
-                      key: key,
-                      suggestions: snapshot.data,
-                      controller: schoolEditController,
-                      decoration: InputDecoration(hintText: "Find your school"),
-                    );
-                  } else {
-                    return TextFormField(
-                      enabled: false,
-                      decoration:
-                          InputDecoration(hintText: "Loading schools..."),
-                    );
-                  }
-                },
+              SchoolFinderTextField(
+                editController: schoolEditController,
+                hintText: "Enter in your school",
               ),
               SizedBox(height: getPercentageOfScreenHeight(context, 3)),
               TextFormField(
                 controller: usernameEditController,
-                decoration: InputDecoration(hintText: "Username"),
+                decoration: InputDecoration(hintText: "Email"),
               ),
               SizedBox(height: getPercentageOfScreenHeight(context, 3)),
               PasswordTextField(
@@ -96,7 +81,10 @@ class SignupFormState extends State<SignupForm> {
                   elevation: 3,
                   onPressed: this.onSubmit,
                   color: Theme.of(context).colorScheme.secondaryVariant,
-                  child: Text('Signup', style: TextStyle(fontSize: 24),),
+                  child: Text(
+                    'Signup',
+                    style: TextStyle(fontSize: 24),
+                  ),
                   textColor: Colors.white,
                 ),
               )

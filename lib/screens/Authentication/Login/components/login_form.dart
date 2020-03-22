@@ -3,14 +3,24 @@ import 'package:gatecheck_frontend_flutter/components/password_text_field.dart';
 import 'package:gatecheck_frontend_flutter/screens/Authentication/Login/components/forgot_password_signup.dart';
 
 class LoginForm extends StatefulWidget {
+
+  final Function onLogin;
+  final bool authFailed;
+
+  const LoginForm({Key key, @required this.onLogin, this.authFailed = false}) : super(key: key);
+
   @override
   LoginFormState createState() {
-    return LoginFormState();
+    return LoginFormState(this.onLogin, this.authFailed);
   }
 }
 
 class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final Function onLogin;
+  final bool authFailed;
+
+  LoginFormState(this.onLogin, this.authFailed);
 
   final usernameEditController = TextEditingController();
   final passwordEditController = TextEditingController();
@@ -18,10 +28,9 @@ class LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     usernameEditController.dispose();
+    passwordEditController.dispose();
     super.dispose();
   }
-
-  onSubmit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +49,7 @@ class LoginFormState extends State<LoginForm> {
               children: <Widget>[
                 TextFormField(
                   controller: usernameEditController,
-                  decoration: InputDecoration(hintText: "Username"),
+                  decoration: InputDecoration(hintText: "Username", border: OutlineInputBorder(), errorText: this.authFailed ? 'Wrong username or password.' : '' ),
                 ),
                 SizedBox(
                   height: 20,
@@ -49,6 +58,7 @@ class LoginFormState extends State<LoginForm> {
                   controller: passwordEditController,
                   defaultVisibile: false,
                   hintText: "Password",
+                  inputBorder: OutlineInputBorder(),
                 )
               ],
             ),
@@ -59,7 +69,7 @@ class LoginFormState extends State<LoginForm> {
               minWidth: MediaQuery.of(context).size.width / 1.2,
               child: RaisedButton(
                 elevation: 7,
-                onPressed: this.onSubmit,
+                onPressed: () => this.onLogin(usernameEditController.text, passwordEditController.text, context),
                 color: Theme.of(context).primaryColor,
                 child: Text(
                   'Login',

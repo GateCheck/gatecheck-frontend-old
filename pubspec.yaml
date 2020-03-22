@@ -32,6 +32,8 @@ dependencies:
   flutter_icons: ^1.0.0+1
   flutter_svg: ^0.17.3+1
   autocomplete_textfield: ^1.6.4
+  validators: ^2.0.0 
+  shared_preferences: ^0.5.6+3
 
 
 
