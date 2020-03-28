@@ -14,14 +14,15 @@ Future<String> login(String username, String password) async {
           MapEntry("loginUsername", username),
           MapEntry("password", password)
         ]));
-    print(res.body);
     if (res.statusCode == 200) {
-      return convert.jsonDecode(res.body)['token'];
+      dynamic json = convert.jsonDecode(res.body);
+      if (!json['success']) return null;
+      return json['token'];
     } else {
-      throw new ArgumentError('Username or password invalid!');
+      return null;
     }
   } catch (Error) {
-    throw new ArgumentError('Username or password invalid!');
+    return null;
   }
 }
 
@@ -36,8 +37,7 @@ Future<String> signup(
           MapEntry("school", school),
           MapEntry("fullName", fullName)
         ]));
-    print(res.body);
-    if (res.statusCode == 200) {
+    if (res.statusCode == 201) {
       return convert.jsonDecode(res.body)['token'];
     } else {
       throw new ArgumentError(convert.jsonDecode(res.body)['message']);

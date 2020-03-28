@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gatecheck_frontend_flutter/utils/get_size.dart';
 
 class EndFloatTopFloatingActionButtonLocation
     extends FloatingActionButtonLocation {
-  const EndFloatTopFloatingActionButtonLocation();
+  final BuildContext context;
+  const EndFloatTopFloatingActionButtonLocation(this.context);
 
   @override
   Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
     // Compute the x-axis offset.
-    final double fabX = _endOffset(scaffoldGeometry);
+    final double fabX =
+        _endOffset(scaffoldGeometry) - getPercentageOfScreenHeight(context, 2.2);
 
     // Compute the y-axis offset.
     final double contentTop = scaffoldGeometry.contentTop;

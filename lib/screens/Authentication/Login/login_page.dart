@@ -16,45 +16,49 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   bool failedAuth = false;
 
-  void onLogin(String username, String password, BuildContext context) async {
-    try {
-      showLoading();
-      String token = await login(username, password);
-      Navigator.pop(context);
-      BlocProvider.of<AuthBloc>(context).add(new LoginEvent(token));
-      Navigator.popAndPushNamed(context, '/main/inbox');
-    } catch (err) {
-      setState(() {
-        failedAuth = true;
+  void onLogin(String username, String password) async {
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      duration: new Duration(seconds: 20),
+      content: new Row(
+        children: <Widget>[
+          new CircularProgressIndicator(),
+          new Text("  Signing-In...")
+        ],
+      ),
+    ));
+
+    String token = await login(username, password);
+    if (token == null) {
+      Future.delayed(Duration(milliseconds: 600)).whenComplete(() {
+        _scaffoldKey.currentState.removeCurrentSnackBar();
+        setState(() {
+          failedAuth = true;
+        });
       });
+      return;
     }
+
+    BlocProvider.of<AuthBloc>(context).add(new LoginEvent(token));
+    Navigator.pushReplacementNamed(context, '/main/inbox');
   }
 
-  void showLoading() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new CircularProgressIndicator(),
-              new Text("Logging in..."),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  Widget _failedAuth() => failedAuth
+      ? Text(
+          'Wrong username or password.',
+          style: TextStyle(color: Theme.of(context).errorColor),
+        )
+      : Container();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).backgroundColor,
-      floatingActionButtonLocation: EndFloatTopFloatingActionButtonLocation(),
+      floatingActionButtonLocation: EndFloatTopFloatingActionButtonLocation(context),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         child: Icon(
@@ -66,6 +70,13 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 0,
       ),
       body: Container(
+        margin: EdgeInsets.only(
+            left: (MediaQuery.of(context).size.width -
+                    (MediaQuery.of(context).size.width / 1.2)) /
+                2,
+            right: (MediaQuery.of(context).size.width -
+                    (MediaQuery.of(context).size.width / 1.2)) /
+                2),
         child: ListView(
           children: <Widget>[
             Padding(
@@ -78,8 +89,11 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
+            _failedAuth(),
+            SizedBox(
+              height: 10,
+            ),
             LoginForm(
-              
               onLogin: this.onLogin,
             )
           ],

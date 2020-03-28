@@ -1,53 +1,64 @@
 import 'package:flutter/material.dart';
 
-class PasswordTextField extends StatefulWidget {
+class PasswordTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool defaultVisibile;
   final InputBorder inputBorder;
+  final String Function(String) validator;
 
-  PasswordTextField(
-      {Key key, this.controller, this.defaultVisibile = false, this.hintText, this.inputBorder})
+  PasswordTextFormField(
+      {Key key,
+      this.controller,
+      this.defaultVisibile = false,
+      this.hintText,
+      this.inputBorder,
+      this.validator})
       : super(key: key);
 
   @override
-  PasswordTextFieldState createState() => PasswordTextFieldState(
-      this.controller, this.defaultVisibile, this.hintText, this.inputBorder);
+  PasswordTextFormFieldState createState() => PasswordTextFormFieldState(
+      this.controller,
+      this.defaultVisibile,
+      this.hintText,
+      this.inputBorder,
+      this.validator);
 }
 
-class PasswordTextFieldState extends State<PasswordTextField> {
+class PasswordTextFormFieldState extends State<PasswordTextFormField> {
   final TextEditingController controller;
   final String hintText;
   final InputBorder inputBorder;
-  
+  final String Function(String) validator;
+
   bool passwordVisible;
 
-  PasswordTextFieldState(this.controller, this.passwordVisible, this.hintText, this.inputBorder);
+  PasswordTextFormFieldState(this.controller, this.passwordVisible, this.hintText,
+      this.inputBorder, this.validator);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextFormField(
-        obscureText: !passwordVisible,
-        controller: controller,
-        keyboardType: TextInputType.visiblePassword,
-        decoration: InputDecoration(
-            hintText: hintText,
-            border: this.inputBorder,
-            suffixIcon: IconButton(
-              icon: Icon(
-                // Based on passwordVisible state choose the icon
-                passwordVisible ? Icons.visibility : Icons.visibility_off,
-                color: Theme.of(context).primaryColorDark,
-              ),
-              onPressed: () {
-                // Update the state i.e. toogle the state of passwordVisible variable
-                setState(() {
-                  passwordVisible = !passwordVisible;
-                });
-              },
-            )),
-      ),
+    return TextFormField(
+      obscureText: !passwordVisible,
+      controller: controller,
+      keyboardType: TextInputType.visiblePassword,
+      validator: validator,
+      decoration: InputDecoration(
+          hintText: hintText,
+          border: this.inputBorder,
+          suffixIcon: IconButton(
+            icon: Icon(
+              // Based on passwordVisible state choose the icon
+              passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: Theme.of(context).primaryColorDark,
+            ),
+            onPressed: () {
+              // Update the state i.e. toogle the state of passwordVisible variable
+              setState(() {
+                passwordVisible = !passwordVisible;
+              });
+            },
+          )),
     );
   }
 }

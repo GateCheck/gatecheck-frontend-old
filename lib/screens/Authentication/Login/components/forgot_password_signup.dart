@@ -4,7 +4,7 @@ class ForgotPasswordSignupButtonGroup extends StatelessWidget {
   const ForgotPasswordSignupButtonGroup({Key key}) : super(key: key);
 
   onSignupClick(BuildContext context) {
-    Navigator.pushNamed(context, '/signup');
+    Navigator.pushReplacementNamed(context, '/signup');
   }
 
   onForgotPasswordClick(BuildContext context) {
